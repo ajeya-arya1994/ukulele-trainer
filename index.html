@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ukulele Fingerpicking Trainer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🎵</span>
+        <span class="logo-text">Ukulele Fingerpicking Trainer</span>
+      </div>
+      <nav class="main-nav">
+        <button class="nav-btn active" onclick="showPage('patterns')">20 Patterns</button>
+        <button class="nav-btn" onclick="showPage('anchor')">Anchor Drill</button>
+        <button class="nav-btn" onclick="showPage('guide')">Technique Guide</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE 1 — 20 PATTERN TRAINER
+    ═══════════════════════════════════════════ -->
+    <section id="page-patterns" class="page active">
+      <div class="page-header">
+        <h1>20 Fingerpicking Patterns</h1>
+        <p class="page-sub">All patterns for muscle memory — beginner to classical. Do 20 clean reps per pattern before moving on.</p>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><span class="lf fp">p</span> thumb · G string</div>
+        <div class="legend-item"><span class="lf fi">i</span> index · C string</div>
+        <div class="legend-item"><span class="lf fm">m</span> middle · E string</div>
+        <div class="legend-item"><span class="lf fa">a</span> ring · A string</div>
+      </div>
+
+      <div class="trainer-grid">
+        <div class="pattern-list" id="pat-list"></div>
+
+        <div class="trainer-panel">
+          <div class="display-box">
+            <div class="disp-meta" id="disp-group">Select a pattern to begin</div>
+            <div class="disp-name" id="disp-name">—</div>
+            <div class="disp-sub" id="disp-sub"></div>
+            <div class="beat-row" id="beat-row">
+              <div class="beat fp" style="opacity:.25">·</div>
+            </div>
+            <div class="str-dots">
+              <div class="str-dot-col"><div class="str-dot-label">G</div><div class="str-dot" id="dot-G"></div></div>
+              <div class="str-dot-col"><div class="str-dot-label">C</div><div class="str-dot" id="dot-C"></div></div>
+              <div class="str-dot-col"><div class="str-dot-label">E</div><div class="str-dot" id="dot-E"></div></div>
+              <div class="str-dot-col"><div class="str-dot-label">A</div><div class="str-dot" id="dot-A"></div></div>
+            </div>
+            <div class="disp-tip" id="disp-tip"></div>
+          </div>
+
+          <div class="control-box">
+            <div class="speed-row">
+              <span class="ctrl-label">Speed</span>
+              <input type="range" min="1" max="5" value="2" step="1" id="spd1" oninput="setSpd1(this.value)" />
+              <span class="ctrl-val" id="spd1-lbl">slow</span>
+            </div>
+            <div class="btn-row">
+              <button class="btn-play" id="play-btn1" onclick="togglePlay1()">▶ Play</button>
+              <button class="btn-icon" onclick="markDone1()" title="Mark done">✓</button>
+              <button class="btn-icon" onclick="resetAll1()" title="Reset all">↺</button>
+            </div>
+            <div class="rep-row">
+              <div class="metro-dot" id="mdot1"></div>
+              <span class="rep-label">Reps: <strong id="rep-n1">0</strong> / 20</span>
+              <div class="rep-track"><div class="rep-fill green" id="rep-bar1"></div></div>
+            </div>
+            <div class="hint-text">20 clean reps = ready for next pattern</div>
+            <div class="total-row">
+              <span class="ctrl-label">Overall progress</span>
+              <span class="ctrl-val"><strong id="done-n">0</strong> / 20 done</span>
+            </div>
+            <div class="rep-track" style="margin-top:6px"><div class="rep-fill blue" id="total-bar"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE 2 — ANCHOR DRILL
+    ═══════════════════════════════════════════ -->
+    <section id="page-anchor" class="page">
+      <div class="page-header">
+        <h1>Finger Anchor Drill</h1>
+        <p class="page-sub">Fix finger swapping. Every finger owns one string — it must return home after every pluck.</p>
+      </div>
+
+      <div class="anchor-grid">
+        <div>
+          <h2 class="section-title">Your finger homes</h2>
+
+          <div class="home-card" id="fh-p">
+            <div class="home-left">
+              <div class="home-circle fp">p</div>
+              <div>
+                <div class="home-name">Thumb</div>
+                <div class="home-rule">rests near G string</div>
+              </div>
+            </div>
+            <span class="home-badge fp">G</span>
+          </div>
+          <div class="home-card" id="fh-i">
+            <div class="home-left">
+              <div class="home-circle fi">i</div>
+              <div>
+                <div class="home-name">Index</div>
+                <div class="home-rule">ONLY plucks C string</div>
+              </div>
+            </div>
+            <span class="home-badge fi">C</span>
+          </div>
+          <div class="home-card" id="fh-m">
+            <div class="home-left">
+              <div class="home-circle fm">m</div>
+              <div>
+                <div class="home-name">Middle</div>
+                <div class="home-rule">ONLY plucks E string</div>
+              </div>
+            </div>
+            <span class="home-badge fm">E</span>
+          </div>
+          <div class="home-card" id="fh-a">
+            <div class="home-left">
+              <div class="home-circle fa">a</div>
+              <div>
+                <div class="home-name">Ring</div>
+                <div class="home-rule">ONLY plucks A string</div>
+              </div>
+            </div>
+            <span class="home-badge fa">A</span>
+          </div>
+
+          <div class="rules-box">
+            <div class="rules-title">3 rules to stop finger swapping</div>
+            <div class="rule-item">↓ Pluck straight DOWN — never reach sideways to another string</div>
+            <div class="rule-item">⌂ After each pluck, finger RETURNS to its home string immediately</div>
+            <div class="rule-item">👁 Keep fingers hovering 1–2 cm above their home string at all times</div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="section-title">Step-by-step drill</h2>
+          <p class="section-hint">Tap Next — watch which string lights up. Say the finger name aloud as you pluck.</p>
+
+          <div class="step-dots-row" id="anchor-dots"></div>
+
+          <div class="display-box" style="margin-bottom:12px">
+            <div class="disp-meta" id="anc-phase">Phase 1 of 5</div>
+            <div class="disp-name" id="anc-title">Ready to start</div>
+            <div class="disp-tip" id="anc-desc">Press Start drill to begin the anchor training sequence.</div>
+          </div>
+
+          <div class="str-blocks">
+            <div class="str-block-col">
+              <div class="str-block-label">G</div>
+              <div class="str-block fp" id="sb-G">p</div>
+            </div>
+            <div class="str-block-col">
+              <div class="str-block-label">C</div>
+              <div class="str-block fi" id="sb-C">i</div>
+            </div>
+            <div class="str-block-col">
+              <div class="str-block-label">E</div>
+              <div class="str-block fm" id="sb-E">m</div>
+            </div>
+            <div class="str-block-col">
+              <div class="str-block-label">A</div>
+              <div class="str-block fa" id="sb-A">a</div>
+            </div>
+          </div>
+
+          <div class="btn-row" style="margin-bottom:12px">
+            <button class="btn-play" id="anc-next-btn" onclick="anchorNext()">Start drill</button>
+            <button class="btn-icon" onclick="anchorReset()" title="Reset">↺</button>
+          </div>
+
+          <div class="control-box">
+            <div class="speed-row">
+              <span class="ctrl-label">Auto-cycle speed</span>
+              <input type="range" min="1" max="4" value="2" step="1" id="anc-spd" oninput="setAncSpd(this.value)" />
+              <span class="ctrl-val" id="anc-spd-lbl">medium</span>
+            </div>
+            <button class="btn-play" id="anc-auto-btn" onclick="toggleAncAuto()">▶ Auto-cycle strings</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE 3 — TECHNIQUE GUIDE
+    ═══════════════════════════════════════════ -->
+    <section id="page-guide" class="page">
+      <div class="page-header">
+        <h1>Technique Guide</h1>
+        <p class="page-sub">Core principles for clean fingerpicking — read these once, then let your hands do the work.</p>
+      </div>
+
+      <div class="guide-grid">
+
+        <div class="guide-card">
+          <div class="guide-num">01</div>
+          <h3>Hand posture</h3>
+          <p>Rest your forearm lightly on the body of the ukulele. Keep your wrist relaxed and slightly curved — imagine holding a small ball. Never anchor your wrist or pinky finger to the soundboard.</p>
+          <div class="guide-tip">Tension is the enemy. If your hand feels tight, stop, shake it out, and restart slower.</div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-num">02</div>
+          <h3>Plucking direction</h3>
+          <p>Each finger should pull slightly inward toward your palm — not flick outward or reach sideways. Think of a small inward curl, not an outward flick. This keeps every finger close to its home string.</p>
+          <div class="guide-tip">Practice one finger at a time: pluck, return, pluck, return. Repeat 20 times per finger before combining.</div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-num">03</div>
+          <h3>Nail vs flesh</h3>
+          <p>Plucking with the nail tip gives a bright, loud tone. Plucking with the flesh of the fingertip gives a soft, warm tone. Both are valid — choose based on what the song needs. Most beginners accidentally mix the two unevenly.</p>
+          <div class="guide-tip">Pick one technique and stick with it until it's consistent. Mixing them creates uneven volume.</div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-num">04</div>
+          <h3>Speed rule</h3>
+          <p>Never practice faster than you can play cleanly. Speed comes automatically once patterns are in muscle memory. Playing fast and sloppy builds bad habits that take months to undo.</p>
+          <div class="guide-tip">BPM ladder: 40 → 50 → 60 → 70 → 80 → 90 → 100. Only move up after 20 perfect reps at current speed.</div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-num">05</div>
+          <h3>Say it aloud</h3>
+          <p>While practicing patterns, say the finger name aloud as you pluck — "p… i… m… a…". This connects your verbal brain to your motor brain and builds muscle memory significantly faster than silent practice.</p>
+          <div class="guide-tip">Once you can play a pattern without saying the names, you've achieved automaticity — that's the goal.</div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-num">06</div>
+          <h3>Daily practice structure</h3>
+          <p>Keep sessions short and consistent. 15 minutes every day beats 2 hours once a week. Your fingers need repeated small signals to build memory, not one big overwhelming session.</p>
+          <div class="guide-tip">0–5 min: warm-up single strings → 5–12 min: current pattern drill → 12–15 min: apply to a real song.</div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-num">07</div>
+          <h3>The return habit</h3>
+          <p>After every single pluck, that finger must return to its home string before the next finger moves. This "return habit" is what autopilot feels like once built. It is the single most important skill to develop first.</p>
+          <div class="guide-tip">If you find fingers swapping strings, slow down to the point where you can feel each finger return before the next one moves.</div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-num">08</div>
+          <h3>Use a metronome</h3>
+          <p>A metronome is not optional — it is essential. Uneven timing is invisible to you while playing but immediately obvious to a listener. Even 5 minutes with a metronome per day will transform your timing within 2 weeks.</p>
+          <div class="guide-tip">Free metronome apps: Metronome Beats (Android/iOS), Google search "metronome" has a built-in one.</div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Built for ukulele beginners · Practice slow, play clean 🎵</p>
+  </footer>
+
+  <script src="js/patterns.js"></script>
+  <script src="js/anchor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
